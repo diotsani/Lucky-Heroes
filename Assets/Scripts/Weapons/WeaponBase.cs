@@ -1,4 +1,5 @@
-﻿using Database.Character;
+﻿using Context;
+using Database.Character;
 using Database.Weapon;
 using Enemy;
 using Interfaces;
@@ -10,6 +11,6 @@ namespace Weapons
     {
         public WeaponData Data { get; set; }
         
-        public abstract void Attack(RuntimeStats charRuntimeStats, IDamageable damageable);
+        public abstract void Attack(AttackContext attackContext, IDamageable damageable);
     }
 }

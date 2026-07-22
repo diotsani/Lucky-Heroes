@@ -1,16 +1,17 @@
 ﻿using Enums;
+using StateMachines;
 
 namespace Character
 {
     public class RunState : CharacterState
     {
-        public RunState(CharacterBrain character, CharacterStateMachine stateMachine) : base(character, stateMachine)
+        public RunState(CharacterBrain character, StateMachine stateMachine) : base(character, stateMachine)
         {
         }
 
         public override void Enter()
         {
-            Character.AnimatorPlayAnimation(CharacterAnimationType.Run);
+            Character.AnimatorPlayAnimation(EntityAnimationType.Run);
         }
 
         public override void Exit()

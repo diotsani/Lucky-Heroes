@@ -1,4 +1,5 @@
-﻿using Database.Character;
+﻿using System;
+using Database;
 using Interfaces;
 using UnityEngine;
 
@@ -7,10 +8,8 @@ namespace Enemy
     public class EnemyDamageable : MonoBehaviour, IDamageable
     {
         [SerializeField] private EnemyBrain brain;
-        public void TakeDamage(float damage)
-        {
-            
-        }
+
+        public Action<float> OnTakeDamage { get; set; }
 
         public void Death()
         {

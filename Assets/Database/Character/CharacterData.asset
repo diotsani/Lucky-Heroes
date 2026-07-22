@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f5caaed9ee4c27b2c6e54f44f0677a, type: 3}
   m_Name: CharacterData
   m_EditorClassIdentifier: 
-  characterName: Le
-  characterStats:
-    Attack: 100
+  entityName: Le
+  entityStats:
+    Attack: 1
     Health: 1000
-    Defense: 100
     Mana: 100
     Stamina: 100
-    Luck: 1
+    AttackSpeed: 0
+    Luck: 0
     WalkSpeed: 0.5
     RunSpeed: 1
   weapon: {fileID: 11400000, guid: d842babadc1b4d04b990145945dbdfbd, type: 2}

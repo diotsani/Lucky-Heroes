@@ -1,4 +1,5 @@
 ﻿using System;
+using Context;
 using Damages;
 using Database.Character;
 using Enemy;
@@ -12,7 +13,7 @@ namespace Weapons
         [SerializeField] private Transform attackPoint;
         [SerializeField] private LayerMask layerMask;
         
-        public override void Attack(RuntimeStats runtimeStats, IDamageable targetDamageable)
+        public override void Attack(AttackContext attackContext, IDamageable targetDamageable)
         {
             Collider2D[] hits = Physics2D.OverlapBoxAll(attackPoint.position, Data.AttackSize, attackPoint.eulerAngles.z, layerMask);
 
@@ -20,13 +21,13 @@ namespace Weapons
             {
                 if (hit.TryGetComponent(out IDamageable damageable))
                 {
-                    DamageFormulaContext ctx = new DamageFormulaContext
+                    var ctx = new DamageContext
                     {
-                        DamageScale = runtimeStats.Attack,
+                        DamageScale = attackContext.Attack,
                         DamageMultiplier = Data.AttackDamage, 
-                        LuckScale = runtimeStats.Luck, 
-                        OwnerLevel = runtimeStats.Level, 
-                        TargetLevel = 1,
+                        LuckScale = attackContext.Luck, 
+                        OwnerLevel = attackContext.Level, 
+                        TargetLevel = damageable.GetRuntimeStats().Level,
                     };
                     float dmg = DamageFormula.CalculateDamage(ctx);
                     damageable.TakeDamage(dmg);

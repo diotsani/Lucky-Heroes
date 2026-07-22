@@ -13,6 +13,7 @@ Heroes with a bit of luck must fight hordes of monsters! Heroes Lucky is a top-d
 
 StateMachine
 - Control the character's behaviour
+- Control enemy behaviour
 
 Database
 - Using ScriptableObjects to manage and maintain data for characters/players, enemies, weapons, and more
@@ -22,6 +23,17 @@ Cinemachine
 
 \## What I Would Do With More Time
 
+Feature and Systems Prioritize
+- Character Control
+- Enemy AI
+- Gameplay System
+- Roguelite System
+- Stats Ability
+- Weapon Ability
+- Item Ability
+
+Extra
+- Skill Character and Enemy
 
 
 \## Known Issues

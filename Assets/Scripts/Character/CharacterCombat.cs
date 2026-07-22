@@ -1,4 +1,5 @@
 ﻿using System;
+using Context;
 using Database.Weapon;
 using UnityEngine;
 using Weapons;
@@ -34,7 +35,13 @@ namespace Character
 
         public void WeaponPlay()
         {
-            //_weapon.Attack(brain.GetRuntimeStats());
+            AttackContext ctx = new AttackContext()
+            {
+                Attack = brain.GetRuntimeStats().Attack,
+                Luck = brain.GetRuntimeStats().Luck,
+                Level = brain.GetRuntimeStats().Level,
+            };
+            weapon.Attack(ctx, null);
         }
 
         private bool CanManualAttack()

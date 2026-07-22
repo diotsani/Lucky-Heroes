@@ -1,10 +1,11 @@
 ﻿using Enums;
+using StateMachines;
 
 namespace Character
 {
     public class DeadState : CharacterState
     {
-        public DeadState(CharacterBrain character, CharacterStateMachine stateMachine) : base(character, stateMachine)
+        public DeadState(CharacterBrain character, StateMachine stateMachine) : base(character, stateMachine)
         {
         }
 
@@ -12,7 +13,7 @@ namespace Character
         {
             Character.InputStop();
             Character.MotorStop();
-            Character.AnimatorPlayAnimation(CharacterAnimationType.Death);
+            Character.AnimatorPlayAnimation(EntityAnimationType.Death);
             Character.CombatStop();
             Character.SkillStop();
         }

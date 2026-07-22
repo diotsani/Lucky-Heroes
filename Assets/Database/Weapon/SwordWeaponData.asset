@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SwordWeaponData
   m_EditorClassIdentifier: 
   WeaponName: Sword
-  AttackDamage: 50
+  Attack: 100
+  AttackDamage: 75
   AttackInterval: 2
   AttackSize: {x: 0.35, y: 0.5}

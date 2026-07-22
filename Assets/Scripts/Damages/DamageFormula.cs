@@ -1,10 +1,12 @@
 ﻿using System.Linq;
+using Context;
+using UnityEngine;
 
 namespace Damages
 {
     public static class DamageFormula
     {
-        public static float CalculateDamage(DamageFormulaContext context)
+        public static float CalculateDamage(DamageContext context)
         {
             float final = 0;
             final = BaseDamage(context.DamageScale, context.DamageMultiplier) * Defense(context.OwnerLevel, context.TargetLevel);
@@ -14,6 +16,7 @@ namespace Damages
 
         static float BaseDamage(float scale, float multiplier)
         {
+            Debug.Log($"Base Dmg: {scale * (multiplier / 100)}");
             return scale * (multiplier / 100);
         }
 
@@ -34,17 +37,8 @@ namespace Damages
 
         static float Defense(int characterLevel, int enemyLevel)
         {
-            return (characterLevel + 100) / (characterLevel + enemyLevel + 200);
+            Debug.Log($"{characterLevel}, {enemyLevel} > Defense: {(characterLevel + 100) / (characterLevel + enemyLevel + 200)}");
+            return (characterLevel + 100f) / (characterLevel + enemyLevel + 200f);
         }
-    }
-
-    public class DamageFormulaContext
-    {
-        public float DamageScale;
-        public float DamageMultiplier;
-        public float[] DamageBonus;
-        public float LuckScale;
-        public int OwnerLevel;
-        public int TargetLevel;
     }
 }

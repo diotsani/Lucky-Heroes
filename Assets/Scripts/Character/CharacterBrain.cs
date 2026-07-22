@@ -1,12 +1,15 @@
 using System;
+using Database;
 using Database.Character;
 using Database.Weapon;
+using Entity;
 using Enums;
+using StateMachines;
 using UnityEngine;
 
 namespace Character
 {
-    [RequireComponent(typeof(CharacterInput), typeof(CharacterMotor), typeof(CharacterAnimator))]
+    [RequireComponent(typeof(CharacterInput), typeof(CharacterMotor), typeof(EntityAnimator))]
     public class CharacterBrain : MonoBehaviour
     {
         [Header("Data")]
@@ -17,14 +20,15 @@ namespace Character
         [SerializeField] private CharacterMotor motor;
         [SerializeField] private CharacterCombat combat;
         [SerializeField] private CharacterSkill skill;
-        [SerializeField] private CharacterAnimator animator;
+        [SerializeField] private CharacterDamageable damageable;
+        [SerializeField] private EntityAnimator animator;
 
         private CharacterStateType _stateType;
-        private CharacterStateMachine StateMachine { get; set; }
+        private StateMachine StateMachine { get; set; }
         
         private void Awake()
         {
-            StateMachine = new CharacterStateMachine(this);
+            StateMachine = new StateMachine();
             ChangeState(CharacterStateType.Idle);
         }
 
@@ -53,16 +57,20 @@ namespace Character
 
         private void OnEnable()
         {
+            stats.OnDeath += OnDeath;
             input.OnAttacked += OnAttacked;
-            animator.WeaponEvent.PlayAction += OnWeaponPlay;
+            damageable.OnTakeDamage += OnTakeDamage;
+            animator.WeaponEvent.PlayAction += combat.WeaponPlay;
             animator.WeaponEvent.StopAction += OnWeaponStop;
             animator.WeaponEvent.EndAction += OnWeaponEnd;
         }
 
         private void OnDisable()
         {
+            stats.OnDeath -= OnDeath;
             input.OnAttacked -= OnAttacked;
-            animator.WeaponEvent.PlayAction -= OnWeaponPlay;
+            damageable.OnTakeDamage -= OnTakeDamage;
+            animator.WeaponEvent.PlayAction -= combat.WeaponPlay;
             animator.WeaponEvent.StopAction -= OnWeaponStop;
             animator.WeaponEvent.EndAction -= OnWeaponEnd;
         }
@@ -73,18 +81,23 @@ namespace Character
         }
 
         #region Actions
+        private void OnDeath()
+        {
+            ChangeState(CharacterStateType.Dead);
+        }
+        
         private void OnAttacked()
         {
             if (combat.ManualAttack())
             {
-                AnimatorPlayAnimation(CharacterAnimationType.Attack);
+                AnimatorPlayAnimation(EntityAnimationType.Attack);
                 animator.Hold();
             }
         }
 
-        private void OnWeaponPlay()
+        private void OnTakeDamage(float damage)
         {
-            combat.WeaponPlay();
+            stats.ReduceHealth(damage);
         }
         
         private void OnWeaponStop()
@@ -97,7 +110,6 @@ namespace Character
             animator.Continue(_stateType);
         }
         #endregion
-        
 
         #region Controller
         public bool InputMoving()
@@ -125,7 +137,7 @@ namespace Character
             motor.Stop();
         }
         
-        public void AnimatorPlayAnimation(CharacterAnimationType animationType)
+        public void AnimatorPlayAnimation(EntityAnimationType animationType)
         {
             animator.PlayAnimation(animationType);
         }
@@ -144,7 +156,7 @@ namespace Character
         #region Data
         public Stats GetStats()
         {
-            return data.CharacterStats;
+            return data.EntityStats;
         }
         
         public RuntimeStats GetRuntimeStats()

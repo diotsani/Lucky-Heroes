@@ -1,17 +1,18 @@
 ﻿using Enums;
+using StateMachines;
 
 namespace Character
 {
     public class IdleState : CharacterState
     {
-        public IdleState(CharacterBrain character, CharacterStateMachine stateMachine) : base(character, stateMachine)
+        public IdleState(CharacterBrain character, StateMachine stateMachine) : base(character, stateMachine)
         {
         }
 
         public override void Enter()
         {
             Character.MotorStop();
-            Character.AnimatorPlayAnimation(CharacterAnimationType.Idle);
+            Character.AnimatorPlayAnimation(EntityAnimationType.Idle);
         }
 
         public override void Exit()
