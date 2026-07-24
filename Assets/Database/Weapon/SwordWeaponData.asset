@@ -15,5 +15,6 @@ MonoBehaviour:
   WeaponName: Sword
   Attack: 100
   AttackDamage: 75
-  AttackInterval: 2
+  AttackCooldown: 0
+  AttackClip: {fileID: 7400000, guid: e8b85cb03a19e9648a82d93d80096d54, type: 2}
   AttackSize: {x: 0.35, y: 0.5}

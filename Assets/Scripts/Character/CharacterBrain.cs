@@ -5,6 +5,7 @@ using Database.Weapon;
 using Entity;
 using Enums;
 using StateMachines;
+using UI;
 using UnityEngine;
 
 namespace Character
@@ -22,6 +23,8 @@ namespace Character
         [SerializeField] private CharacterSkill skill;
         [SerializeField] private CharacterDamageable damageable;
         [SerializeField] private EntityAnimator animator;
+        [Header("UI")] 
+        [SerializeField] private UIStatsManager uiStats;
 
         private CharacterStateType _stateType;
         private StateMachine StateMachine { get; set; }
@@ -58,6 +61,7 @@ namespace Character
         private void OnEnable()
         {
             stats.OnDeath += OnDeath;
+            stats.OnGainASpd += OnGainASpd;
             input.OnAttacked += OnAttacked;
             damageable.OnTakeDamage += OnTakeDamage;
             animator.WeaponEvent.PlayAction += combat.WeaponPlay;
@@ -68,6 +72,7 @@ namespace Character
         private void OnDisable()
         {
             stats.OnDeath -= OnDeath;
+            stats.OnGainASpd -= OnGainASpd;
             input.OnAttacked -= OnAttacked;
             damageable.OnTakeDamage -= OnTakeDamage;
             animator.WeaponEvent.PlayAction -= combat.WeaponPlay;
@@ -85,6 +90,11 @@ namespace Character
         {
             ChangeState(CharacterStateType.Dead);
         }
+
+        private void OnGainASpd(float amount)
+        {
+            animator.UpdateASpdValue(amount);
+        }
         
         private void OnAttacked()
         {
@@ -98,6 +108,7 @@ namespace Character
         private void OnTakeDamage(float damage)
         {
             stats.ReduceHealth(damage);
+            uiStats.UpdateHp(stats.RuntimeStats.HealthPercent);
         }
         
         private void OnWeaponStop()
@@ -108,6 +119,7 @@ namespace Character
         private void OnWeaponEnd()
         {
             animator.Continue(_stateType);
+            combat.WeaponEnd();
         }
         #endregion
 

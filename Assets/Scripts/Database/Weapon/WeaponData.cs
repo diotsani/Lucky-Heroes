@@ -1,6 +1,7 @@
 ﻿using Database.Character;
 using Enemy;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Database.Weapon
 {
@@ -11,7 +12,8 @@ namespace Database.Weapon
         public float Attack;
         [Tooltip("Damage in percentage")]
         public float AttackDamage;
-        public float AttackInterval;
+        public float AttackCooldown;
+        public AnimationClip AttackClip;
         public Vector2 AttackSize;
     }
 }

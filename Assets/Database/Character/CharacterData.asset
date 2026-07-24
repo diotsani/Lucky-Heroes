@@ -18,8 +18,8 @@ MonoBehaviour:
     Health: 1000
     Mana: 100
     Stamina: 100
-    AttackSpeed: 0
-    Luck: 0
+    AttackSpeed: 1
+    Luck: 1
     WalkSpeed: 0.5
-    RunSpeed: 1
+    RunSpeed: 0.75
   weapon: {fileID: 11400000, guid: d842babadc1b4d04b990145945dbdfbd, type: 2}

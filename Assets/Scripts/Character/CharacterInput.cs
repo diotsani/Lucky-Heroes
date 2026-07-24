@@ -42,12 +42,12 @@ namespace Character
 
             Running = _input.Player.Sprint.IsPressed();
             
-            if(_input.Player.Attack.IsPressed())
+            if(_input.Player.Attack.WasPressedThisFrame())
             {
                 OnAttacked?.Invoke();
             }
 
-            if (_input.Player.Interact.IsPressed())
+            if (_input.Player.Interact.WasPressedThisFrame())
             {
                 OnInteracted?.Invoke();
             }

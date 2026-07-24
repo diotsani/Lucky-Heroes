@@ -13,6 +13,8 @@ namespace Enemy
 {
     public class EnemyBrain : MonoBehaviour
     {
+        [SerializeField] private EnemyType type;
+        public EnemyType Type => type;
         [Header("Data")]
         [SerializeField] private EnemyData data;
         [Header("Controller")]
@@ -28,15 +30,17 @@ namespace Enemy
         
         private void Awake()
         {
-            Initialize();
             StateMachine = new StateMachine();
-            ChangeState(data.FirstState);
         }
         
-        public void Initialize()
+        public void Initialize(Vector2 position)
         {
             // Temp
-            _player = GameObject.FindWithTag("Player").transform;
+            if(_player == null)_player = GameObject.FindWithTag("Player").transform;
+            
+            transform.position = position;
+            gameObject.SetActive(true);
+            ChangeState(data.FirstState);
         }
         
         public void ChangeState(EnemyStateType type)

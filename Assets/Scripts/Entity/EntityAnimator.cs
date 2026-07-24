@@ -11,9 +11,10 @@ namespace Entity
         [SerializeField] private WeaponAnimationEvent weaponAnimationEvent;
         public WeaponAnimationEvent WeaponEvent => weaponAnimationEvent;
 
-        private bool _hold = false;
+        [SerializeField] private bool _hold = false;
+        private static readonly int ASpd = Animator.StringToHash("ASpd");
 
-        public void PlayAnimation(EntityAnimationType type)
+        public virtual void PlayAnimation(EntityAnimationType type)
         {
             if(_hold)return;
             //if(animationType == type)return;
@@ -21,8 +22,9 @@ namespace Entity
             animator.Play(type.ToString());
         }
 
-        public void Continue(CharacterStateType type)
+        public virtual void Continue(CharacterStateType type)
         {
+            Debug.Log("Hold Attack False");
             _hold = false;
             animationType = type switch
             {
@@ -37,7 +39,13 @@ namespace Entity
 
         public void Hold()
         {
+            Debug.Log("Hold Attack True");
             _hold = true;
+        }
+
+        public void UpdateASpdValue(float value)
+        {
+            animator.SetFloat(ASpd, value);
         }
     }
 }

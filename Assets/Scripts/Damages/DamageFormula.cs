@@ -9,7 +9,8 @@ namespace Damages
         public static float CalculateDamage(DamageContext context)
         {
             float final = 0;
-            final = BaseDamage(context.DamageScale, context.DamageMultiplier) * Defense(context.OwnerLevel, context.TargetLevel);
+            //final = BaseDamage(context.DamageScale, context.DamageMultiplier) * Defense(context.OwnerLevel, context.TargetLevel);
+            final = BaseDamage(context.DamageScale, context.DamageMultiplier);
             final += LuckDamage(context.LuckScale, context.OwnerLevel);
             return final;
         }

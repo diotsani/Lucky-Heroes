@@ -41,6 +41,7 @@ namespace Database
         public float MaxMana;
         public float Stamina;
         public float MaxStamina;
+        public float BaseAttackSpeed;
         public float AttackSpeed;
         public int Luck;
 
@@ -48,5 +49,6 @@ namespace Database
         public float HealthPercent => Health / MaxHealth;
         public float ManaPercent => Mana / MaxMana;
         public float StaminaPercent => Stamina / MaxStamina;
+        public float ASpd => BaseAttackSpeed / AttackSpeed;
     }
 }

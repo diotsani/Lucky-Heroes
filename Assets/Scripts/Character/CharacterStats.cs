@@ -12,6 +12,7 @@ namespace Character
         public RuntimeStats RuntimeStats { get; private set; }
         
         public Action OnDeath { get; set; }
+        public Action<float> OnGainASpd { get; set; }
 
         private void Start()
         {
@@ -39,6 +40,8 @@ namespace Character
                 MaxMana = baseStats.Mana,
                 Stamina = baseStats.Stamina,
                 MaxStamina = baseStats.Stamina,
+                BaseAttackSpeed = baseStats.AttackSpeed,
+                AttackSpeed = baseStats.AttackSpeed,
                 Luck = baseStats.Luck
             };
         }
@@ -70,6 +73,19 @@ namespace Character
         public void GainLuck(int luck)
         {
             RuntimeStats.Luck += luck;
+        }
+
+        [ContextMenu("Gain ASpd")]
+        public void GainASpd()
+        {
+            GainASpd(20);
+        }
+        public void GainASpd(float value)
+        {
+            // value in percentage
+            // SPD = 1, Multiplier = 1 > low multiplier, high spd 
+            RuntimeStats.AttackSpeed += RuntimeStats.BaseAttackSpeed * value / 100;
+            OnGainASpd?.Invoke(RuntimeStats.AttackSpeed);
         }
 
         public void ReduceHealth(float amount)
