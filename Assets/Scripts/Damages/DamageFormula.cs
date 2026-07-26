@@ -11,7 +11,7 @@ namespace Damages
             float final = 0;
             //final = BaseDamage(context.DamageScale, context.DamageMultiplier) * Defense(context.OwnerLevel, context.TargetLevel);
             final = BaseDamage(context.DamageScale, context.DamageMultiplier);
-            final += LuckDamage(context.LuckScale, context.OwnerLevel);
+            //final += LuckDamage(context.LuckScale, context.OwnerLevel);
             return final;
         }
 
@@ -28,6 +28,7 @@ namespace Damages
 
         static float LuckDamage(float scale, int characterLevel)
         {
+            if(scale == 0 || characterLevel == 0)return 0;
             return scale / characterLevel;
         }
 

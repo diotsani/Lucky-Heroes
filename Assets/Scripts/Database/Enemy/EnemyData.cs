@@ -1,4 +1,5 @@
-﻿using Enums;
+﻿using Database.Core;
+using Enums;
 using UnityEngine;
 
 namespace Database.Enemy
@@ -14,6 +15,8 @@ namespace Database.Enemy
         [SerializeField] private float attackInterval = 1;
         [SerializeField] private float patrolRange;
         [SerializeField] private float patrolInterval = 2;
+        [Header("Loot")]
+        [SerializeField] private LootTableData loot;
 
         public EnemyStateType FirstState => firstState;
         public float DetectRange => detectRange;
@@ -22,5 +25,6 @@ namespace Database.Enemy
         public float AttackInterval => attackInterval;
         public float PatrolRange => patrolRange;
         public float PatrolInterval => patrolInterval;
+        public LootTableData Loot => loot;
     }
 }

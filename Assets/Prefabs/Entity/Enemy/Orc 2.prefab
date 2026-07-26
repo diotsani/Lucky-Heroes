@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  data: {fileID: 11400000, guid: c61dde340eb75d74fb9445903d72baa4, type: 2}
+  data: {fileID: 11400000, guid: b1b92ebd771332e4696a37a2e2681e1b, type: 2}
   stats: {fileID: 8967350515209816617}
   motor: {fileID: 6727139565335092046}
   combat: {fileID: 3101363703896127653}
@@ -178,6 +178,7 @@ MonoBehaviour:
   animationType: 0
   animator: {fileID: 1300623433165021430}
   weaponAnimationEvent: {fileID: 6608581924792277297}
+  _hold: 0
 --- !u!114 &6727139565335092046
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,11 +15,12 @@ MonoBehaviour:
   entityName: Le
   entityStats:
     Attack: 1
-    Health: 1000
-    Mana: 100
-    Stamina: 100
+    Health: 10
+    Mana: 10
+    Stamina: 10
     AttackSpeed: 1
     Luck: 1
+    Speed: 1
     WalkSpeed: 0.5
     RunSpeed: 0.75
   weapon: {fileID: 11400000, guid: d842babadc1b4d04b990145945dbdfbd, type: 2}

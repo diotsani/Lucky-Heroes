@@ -1,11 +1,13 @@
 ﻿using System;
 using Battlefield;
 using Character;
+using Core;
 using Database;
 using Database.Enemy;
 using Database.Weapon;
 using Entity;
 using Enums;
+using Pool;
 using StateMachines;
 using UnityEngine;
 
@@ -24,7 +26,9 @@ namespace Enemy
         [SerializeField] private EnemyDamageable damageable;
         [SerializeField] private EntityAnimator animator;
 
+        private SpawnManager _spawn;
         private Transform _player;
+        private GameManager _game;
         private EnemyStateType _stateType;
         private StateMachine StateMachine { get; set; }
         
@@ -33,11 +37,13 @@ namespace Enemy
             StateMachine = new StateMachine();
         }
         
-        public void Initialize(Vector2 position)
+        public void Initialize(SpawnManager spawn, Vector2 position, DifficultyData diffData)
         {
             // Temp
-            if(_player == null)_player = GameObject.FindWithTag("Player").transform;
-            
+            if(_spawn == null) _spawn = spawn;
+            if(_player == null) _player = Services.Services.Get<CharacterBrain>().transform;
+            if(_game == null) _game = Services.Services.Get<GameManager>();
+            stats.InitializeStats(diffData);
             transform.position = position;
             gameObject.SetActive(true);
             ChangeState(data.FirstState);
@@ -93,7 +99,14 @@ namespace Enemy
         // Action
         private void OnDeath()
         {
-            Debug.Log("Dead");
+            _game.Loot.Roll(data.Loot, transform.position);
+            _spawn.Remove(this);
+            Services.Services.Get<PoolManager>().Release(this);
+        }
+
+        public void ForceDespawn()
+        {
+            Services.Services.Get<PoolManager>().Release(this);
         }
 
         // Controller

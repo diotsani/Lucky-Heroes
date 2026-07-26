@@ -9,6 +9,7 @@ namespace Core
     public class SpawnManager : MonoBehaviour
     {
         [SerializeField] private GameManager game;
+        private readonly List<EnemyBrain> _activeEnemies = new List<EnemyBrain>();
         private PoolManager _pool;
         
         private float _baseSpawnInterval;
@@ -39,6 +40,7 @@ namespace Core
         public void EndSpawn()
         {
             _isSpawning = false;
+            DespawnAll();
         }
 
         public void CompleteSpawn()
@@ -56,11 +58,27 @@ namespace Core
                 for (int i = 0; i < _spawnCount; i++)
                 {
                     var enemy = _pool.GetEnemy(game.EnemyType);
-                    enemy.Initialize(game.SpawnPosition);
+                    _activeEnemies.Add(enemy);
+                    enemy.Initialize(this, game.SpawnPosition, game.Difficulty);
                 }
                 _spawnInterval = _baseSpawnInterval * game.RandomMultiplier;
                 _spawnCount = Mathf.RoundToInt(_baseSpawnCount * game.RandomMultiplier);
             }
+        }
+
+        public void Remove(EnemyBrain enemy)
+        {
+            _activeEnemies.Remove(enemy);
+        }
+
+        public void DespawnAll()
+        {
+            foreach (var enemy in _activeEnemies)
+            {
+                enemy.ForceDespawn();
+            }
+            
+            _activeEnemies.Clear();
         }
     }
 }

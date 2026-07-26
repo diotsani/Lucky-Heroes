@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec8c1dc0a424d6d83cb171052c2dd09, type: 3}
+  m_Name: Orc2 EnemyData
+  m_EditorClassIdentifier: 
+  entityName: Orc1
+  entityStats:
+    Attack: 2
+    Health: 2
+    Mana: 100
+    Stamina: 100
+    AttackSpeed: 1
+    Luck: 0
+    Speed: 1
+    WalkSpeed: 0.09375
+    RunSpeed: 0.140625
+  weapon: {fileID: 11400000, guid: 8357d67d5de3b6141a95a90aaf2a63f5, type: 2}
+  firstState: 2
+  detectRange: 1
+  detectInterval: 0.2
+  attackRange: 0.2
+  attackInterval: 1
+  patrolRange: 0.5
+  patrolInterval: 5
+  loot: {fileID: 11400000, guid: fd41d1f6494d34a42a48256d81d843ea, type: 2}

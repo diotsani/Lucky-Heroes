@@ -11,7 +11,7 @@ namespace Character
 
         public override void Enter()
         {
-            Character.AnimatorPlayAnimation(EntityAnimationType.Run);
+            Character.Animator.PlayAnimation(EntityAnimationType.Run);
         }
 
         public override void Exit()

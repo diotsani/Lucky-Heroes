@@ -1,12 +1,14 @@
 using System;
 using Database;
 using Database.Character;
+using Database.Upgrade;
 using Database.Weapon;
 using Entity;
 using Enums;
 using StateMachines;
 using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Character
 {
@@ -17,20 +19,29 @@ namespace Character
         [SerializeField] private CharacterData data;
         [Header("Controller")]
         [SerializeField] private CharacterStats stats;
+        [SerializeField] private CharacterLevel level;
+        [SerializeField] private CharacterResources resources;
         [SerializeField] private CharacterInput input;
         [SerializeField] private CharacterMotor motor;
         [SerializeField] private CharacterCombat combat;
         [SerializeField] private CharacterSkill skill;
         [SerializeField] private CharacterDamageable damageable;
         [SerializeField] private EntityAnimator animator;
-        [Header("UI")] 
-        [SerializeField] private UIStatsManager uiStats;
+        public CharacterStats Stats => stats;
+        public CharacterLevel Level => level;
+        public CharacterResources Resources => resources;
+        public CharacterInput Input => input;
+        public CharacterMotor Motor => motor;
+        public CharacterCombat Combat => combat;
+        public CharacterSkill Skill => skill;
+        public EntityAnimator Animator => animator;
 
         private CharacterStateType _stateType;
         private StateMachine StateMachine { get; set; }
         
         private void Awake()
         {
+            Services.Services.Register(this);
             StateMachine = new StateMachine();
             ChangeState(CharacterStateType.Idle);
         }
@@ -100,15 +111,14 @@ namespace Character
         {
             if (combat.ManualAttack())
             {
-                AnimatorPlayAnimation(EntityAnimationType.Attack);
-                animator.Hold();
+                Animator.PlayAnimation(EntityAnimationType.Attack);
+                Animator.Hold();
             }
         }
 
         private void OnTakeDamage(float damage)
         {
             stats.ReduceHealth(damage);
-            uiStats.UpdateHp(stats.RuntimeStats.HealthPercent);
         }
         
         private void OnWeaponStop()
@@ -133,35 +143,10 @@ namespace Character
         {
             return input.Running;
         }
-
-        public void InputStop()
-        {
-            input.Stop();
-        }
         
         public void MotorMove()
         {
             motor.Move(input.Move, input.Running);
-        }
-
-        public void MotorStop()
-        {
-            motor.Stop();
-        }
-        
-        public void AnimatorPlayAnimation(EntityAnimationType animationType)
-        {
-            animator.PlayAnimation(animationType);
-        }
-
-        public void CombatStop()
-        {
-            
-        }
-
-        public void SkillStop()
-        {
-            
         }
         #endregion
 

@@ -54,6 +54,11 @@ namespace Character
             _readyToAttack = true;
         }
 
+        public void Stop()
+        {
+            
+        }
+
         private bool CanManualAttack()
         {
             /*_currentManualAttackTime = Time.time;

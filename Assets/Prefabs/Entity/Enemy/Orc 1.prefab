@@ -54,7 +54,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2091470393287905309
 Transform:
   m_ObjectHideFlags: 0
@@ -178,6 +178,7 @@ MonoBehaviour:
   animationType: 0
   animator: {fileID: 1300623433165021430}
   weaponAnimationEvent: {fileID: 6608581924792277297}
+  _hold: 0
 --- !u!114 &6727139565335092046
 MonoBehaviour:
   m_ObjectHideFlags: 0

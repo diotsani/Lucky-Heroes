@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using Enums;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,27 +7,32 @@ namespace UI
 {
     public class UIStatsView : MonoBehaviour
     {
-        [Header("Bar")]
-        [SerializeField] private Image hpFillImage;
-        [SerializeField] private Image mpFillImage;
-        [SerializeField] private Image staminaFillImage;
-        [Header("Stats")]
-        [SerializeField] private GameObject statsPanel;
-        [SerializeField] private TMP_Text statsText;
+        [SerializeField] private UIStats[] uiStats;
+        [SerializeField] private Button closeButton;
         
-        public void UpdateHpFill(float value)
+        public Action OnCloseClicked;
+
+        public void Open()
         {
-            hpFillImage.fillAmount = value;
+            gameObject.SetActive(true);
+            closeButton.onClick.AddListener(() => OnCloseClicked?.Invoke());
+            
         }
 
-        public void UpdateMpFill(float value)
+        public void Close()
         {
-            mpFillImage.fillAmount = value;
+            gameObject.SetActive(false);
+            closeButton.onClick.RemoveAllListeners();
         }
-
-        public void UpdateStaminaFill(float value)
+        
+        public void Setup(int i, StatType type, Sprite icon, string label, string description, string value)
         {
-            staminaFillImage.fillAmount = value;
+            uiStats[i].Setup(type, icon, label, description, value);
+        }
+        
+        public void UpdateValue(int i, string value)
+        {
+            uiStats[i].UpdateValue(value);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Pool
             return obj;
         }
 
-        void Expand(Component  prefab)
+        void Expand(Component prefab)
         {
             int count = Mathf.Min(ExpandSize, MaxSize - _all.Count);
 

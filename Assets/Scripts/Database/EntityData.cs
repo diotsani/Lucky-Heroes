@@ -24,6 +24,7 @@ namespace Database
         public float Stamina;
         public float AttackSpeed;
         public int Luck;
+        public float Speed;
         public float WalkSpeed;
         public float RunSpeed;
     }
@@ -32,7 +33,7 @@ namespace Database
     public class RuntimeStats
     {
         public int Level;
-        public float Experience;
+        public int Experience;
         public float Attack;
         public float MaxAttack;
         public float Health;
@@ -43,6 +44,7 @@ namespace Database
         public float MaxStamina;
         public float BaseAttackSpeed;
         public float AttackSpeed;
+        public float Speed;
         public int Luck;
 
         public float AttackPercent => Attack / MaxAttack;
@@ -50,5 +52,11 @@ namespace Database
         public float ManaPercent => Mana / MaxMana;
         public float StaminaPercent => Stamina / MaxStamina;
         public float ASpd => BaseAttackSpeed / AttackSpeed;
+    }
+
+    [Serializable]
+    public class ResourcesData
+    {
+        public int Gold;
     }
 }

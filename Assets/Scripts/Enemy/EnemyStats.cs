@@ -1,4 +1,5 @@
 ﻿using System;
+using Core;
 using Database;
 using Interfaces;
 using UnityEngine;
@@ -14,22 +15,20 @@ namespace Enemy
         
         public Action OnDeath { get; set; }
 
-        private void Start()
+        public void InitializeStats()
         {
-            InitializeStats();
+            
         }
 
-        public void InitializeStats()
+        public void InitializeStats(DifficultyData diffData)
         {
             var baseStats = brain.GetStats();
             var weapon = brain.GetWeaponData();
             RuntimeStats = new RuntimeStats
             {
-                Level = 1,
-                Attack = baseStats.Attack + weapon.Attack,
-                MaxAttack = baseStats.Attack + weapon.Attack,
-                Health = baseStats.Health,
-                MaxHealth = baseStats.Health,
+                Level = 0,
+                Attack = (baseStats.Attack + weapon.Attack) * diffData.EnemyDamageMultiplier,
+                Health = baseStats.Health * diffData.EnemyHealthMultiplier,
                 Mana = baseStats.Mana,
                 MaxMana = baseStats.Mana,
                 /*Stamina = baseStats.Stamina,

@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: WaveData 3
   m_EditorClassIdentifier: 
   waveName: 
-  totalWeight: 130
+  totalWeight: 150
   waves:
   - enemyType: 0
     weight: 100
-    percent: 76.92308
-    percentage: 76.9%
+    percent: 66.666664
+    percentage: 66.7%
   - enemyType: 1
-    weight: 30
-    percent: 23.076923
-    percentage: 23.1%
-  duration: 60
+    weight: 50
+    percent: 33.333332
+    percentage: 33.3%
+  duration: 15
   interval: 0.6
   maxEnemies: 50
   isValidate: 0

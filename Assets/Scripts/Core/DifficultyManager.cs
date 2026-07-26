@@ -23,6 +23,10 @@ namespace Core
         [SerializeField] private float startDamageMultiplier = 1f;
         [SerializeField] private float endDamageMultiplier = 4f;
         
+        [Header("Loot")]
+        [SerializeField] private float startLootMultiplier = 1f;
+        [SerializeField] private float endLootMultiplier = 4f;
+        
         private DifficultyData _difficultyData;
         public DifficultyData Data => _difficultyData;
 
@@ -41,6 +45,8 @@ namespace Core
             
             _difficultyData.EnemyHealthMultiplier = Mathf.Lerp(startHealMultiplier, endHealMultiplier, progress);
             _difficultyData.EnemyDamageMultiplier = Mathf.Lerp(startDamageMultiplier, endDamageMultiplier, progress);
+            
+            _difficultyData.LootMultiplier = Mathf.Lerp(startLootMultiplier, endLootMultiplier, progress);
         }
 
         public float RandomMultiplier()
@@ -56,5 +62,6 @@ namespace Core
         public int SpawnCount;
         public float EnemyHealthMultiplier;
         public float EnemyDamageMultiplier;
+        public float LootMultiplier;
     }
 }

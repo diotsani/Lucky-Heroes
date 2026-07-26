@@ -11,8 +11,8 @@ namespace Character
 
         public override void Enter()
         {
-            Character.MotorStop();
-            Character.AnimatorPlayAnimation(EntityAnimationType.Idle);
+            Character.Motor.Stop();
+            Character.Animator.PlayAnimation(EntityAnimationType.Idle);
         }
 
         public override void Exit()

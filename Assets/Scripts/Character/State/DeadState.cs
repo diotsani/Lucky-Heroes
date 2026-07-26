@@ -11,11 +11,11 @@ namespace Character
 
         public override void Enter()
         {
-            Character.InputStop();
-            Character.MotorStop();
-            Character.AnimatorPlayAnimation(EntityAnimationType.Death);
-            Character.CombatStop();
-            Character.SkillStop();
+            Character.Input.Stop();
+            Character.Motor.Stop();
+            Character.Animator.PlayAnimation(EntityAnimationType.Death);
+            Character.Combat.Stop();
+            Character.Skill.Stop();
         }
 
         public override void Exit()
