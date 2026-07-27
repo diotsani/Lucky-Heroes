@@ -223,7 +223,6 @@ MonoBehaviour:
   skill: {fileID: 6901755429412903922}
   damageable: {fileID: 3350706241551470523}
   animator: {fileID: 4754087158408966710}
-  uiStats: {fileID: 0}
 --- !u!114 &1641306967824834837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,8 +247,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f21ff301dc2b4f4ebf00d26f6e26c9eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brain: {fileID: 5893948492498416625}
-  rb: {fileID: 8705725699710466926}
 --- !u!114 &4754087158408966710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,7 +262,6 @@ MonoBehaviour:
   animationType: 0
   animator: {fileID: 5113377291048294769}
   weaponAnimationEvent: {fileID: 6400045840842956345}
-  _hold: 0
 --- !u!114 &5033973524389699477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,6 +276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brain: {fileID: 5893948492498416625}
   weapon: {fileID: 6582900447654443642}
+  state: 0
 --- !u!114 &6901755429412903922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,30 +345,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brain: {fileID: 5893948492498416625}
-  requiredExpCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 10
-      inSlope: 24
-      outSlope: 24
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 10
-      value: 250
-      inSlope: 24
-      outSlope: 24
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  baseExp: 10
+  growth: 1.1
 --- !u!114 &4877030897837567041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,7 +447,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!95 &5113377291048294769
 Animator:
   serializedVersion: 7
@@ -483,7 +458,7 @@ Animator:
   m_GameObject: {fileID: 8669769750961376449}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a836289bb49ceaa4291fd3e4bea3303b, type: 2}
+  m_Controller: {fileID: 9100000, guid: 92caf3ee6f0ec33499a9b3b30d22a6a9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -53,6 +53,11 @@ namespace Character
             }
         }
 
+        public void Continue()
+        {
+            _enable = true;
+        }
+
         public void Stop()
         {
             _enable = false;

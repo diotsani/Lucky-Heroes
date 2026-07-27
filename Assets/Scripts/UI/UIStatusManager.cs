@@ -12,14 +12,9 @@ namespace UI
 
         private void OnEnable()
         {
-            if(_character == null) _character = Services.Services.Get<CharacterBrain>();
-            _character.Stats.OnHealthChanged += UpdateHp;
-            _character.Level.OnGainExp += UpdateExp;
-            _character.Resources.OnGoldChanged += UpdateGold;
-
-            view.OnStatsClicked += StatsClicked;
+            
         }
-
+        
         private void OnDisable()
         {
             _character.Stats.OnHealthChanged -= UpdateHp;
@@ -27,6 +22,16 @@ namespace UI
             _character.Resources.OnGoldChanged -= UpdateGold;
             
             view.OnStatsClicked -= StatsClicked;
+        }
+
+        private void Start()
+        {
+            if(_character == null) _character = Services.ServiceLocator.Get<CharacterBrain>();
+            _character.Stats.OnHealthChanged += UpdateHp;
+            _character.Level.OnGainExp += UpdateExp;
+            _character.Resources.OnGoldChanged += UpdateGold;
+
+            view.OnStatsClicked += StatsClicked;
         }
 
         private void StatsClicked()

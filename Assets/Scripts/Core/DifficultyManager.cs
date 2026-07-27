@@ -13,8 +13,8 @@ namespace Core
         [SerializeField] private float startSpawnInterval = 2f;
         [SerializeField] private float endSpawnInterval = 0.2f;
         
-        [SerializeField] private int startSpawnCount = 2;
-        private int _maxSpawnCount;
+        [SerializeField] private int startSpawnCount = 1;
+        [SerializeField] private int _maxSpawnCount = 4;
         
         [Header("Enemy")]
         [SerializeField] private float startHealMultiplier = 1f;
@@ -38,7 +38,7 @@ namespace Core
         public void RefreshDifficultyData(float elapsedTime)
         {
             float progress = Mathf.Clamp01(elapsedTime / difficultyRampTime);
-            _maxSpawnCount = Mathf.Clamp((int)elapsedTime, (int)startSpawnCount, (int)elapsedTime);
+            //_maxSpawnCount = Mathf.Clamp((int)elapsedTime, (int)startSpawnCount, (int)elapsedTime);
             
             _difficultyData.SpawnInterval = Mathf.Lerp(startSpawnInterval, endSpawnInterval, progress);
             _difficultyData.SpawnCount = Mathf.RoundToInt(Mathf.Lerp(startSpawnCount, _maxSpawnCount, progress));

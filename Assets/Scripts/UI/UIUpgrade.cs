@@ -17,12 +17,14 @@ namespace UI
             image.sprite = icon;
             titleText.text = title;
             descriptionText.text = description;
+            chooseButton.gameObject.SetActive(true);
+            chooseButton.onClick.RemoveAllListeners();
             chooseButton.onClick.AddListener(() => choose?.Invoke());
         }
 
-        private void OnDisable()
+        public void SetViewOnly()
         {
-            chooseButton.onClick.RemoveAllListeners();
+            chooseButton.gameObject.SetActive(false);
         }
     }
 }

@@ -15,21 +15,21 @@ namespace Core
         
         private void Start()
         {
-            _pool = Services.Services.Get<PoolManager>();
+            _pool = Services.ServiceLocator.Get<PoolManager>();
         }
         
         public void SpawnExp(int value, Vector2 position)
         {
             var exp = _pool.GetPickup(PickupType.Exp);
             _activePickups.Add(exp);
-            exp.Spawn(value, DropPosition(position));
+            exp.Spawn(this, value, DropPosition(position));
         }
 
         public void SpawnGold(int value, Vector2 position)
         {
             var gold = _pool.GetPickup(PickupType.Gold);
             _activePickups.Add(gold);
-            gold.Spawn(value, DropPosition(position));
+            gold.Spawn(this, value, DropPosition(position));
         }
 
         public void Remove(Pickup pickup)

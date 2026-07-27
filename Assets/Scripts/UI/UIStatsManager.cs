@@ -25,7 +25,7 @@ namespace UI
 
         private void Start()
         {
-            _game = Services.Services.Get<GameManager>();
+            _game = Services.ServiceLocator.Get<GameManager>();
             for (int i = 0; i < data.UIStats.Length; i++)
             {
                 var stat = data.UIStats[i];
@@ -55,7 +55,7 @@ namespace UI
 
         private string GetValueString(StatType type)
         {
-            return _game.Character.Stats.GetValue(type).ToString(CultureInfo.InvariantCulture);
+            return _game.Character.Stats.GetValue(type).ToString("0.0");
         }
     }
 }

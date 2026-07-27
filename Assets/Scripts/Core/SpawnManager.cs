@@ -25,7 +25,7 @@ namespace Core
 
         private void Start()
         {
-            _pool = Services.Services.Get<PoolManager>();
+            _pool = Services.ServiceLocator.Get<PoolManager>();
         }
 
         public void StartSpawn(float spawnInterval, int spawnCount)

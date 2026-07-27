@@ -13,7 +13,6 @@ namespace Character
         private const float RegenRate = 10;
         public RuntimeStats RuntimeStats { get; private set; }
         public Action<float> OnHealthChanged { get; set; }
-        public Action OnDeath { get; set; }
         public Action<float> OnGainASpd { get; set; }
 
         private void Awake()
@@ -112,7 +111,7 @@ namespace Character
             if (RuntimeStats.Health <= 0)
             {
                 RuntimeStats.Health = 0;
-                OnDeath?.Invoke();
+                brain.OnDeath?.Invoke();
             }
         }
         

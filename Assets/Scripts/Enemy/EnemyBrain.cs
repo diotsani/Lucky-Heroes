@@ -26,9 +26,13 @@ namespace Enemy
         [SerializeField] private EnemyDamageable damageable;
         [SerializeField] private EntityAnimator animator;
 
+        public EntityAnimator Animator => animator;
         private SpawnManager _spawn;
         private Transform _player;
         private GameManager _game;
+        
+        public Action OnDeath { get; set; }
+            
         private EnemyStateType _stateType;
         private StateMachine StateMachine { get; set; }
         
@@ -41,8 +45,8 @@ namespace Enemy
         {
             // Temp
             if(_spawn == null) _spawn = spawn;
-            if(_player == null) _player = Services.Services.Get<CharacterBrain>().transform;
-            if(_game == null) _game = Services.Services.Get<GameManager>();
+            if(_player == null) _player = Services.ServiceLocator.Get<CharacterBrain>().transform;
+            if(_game == null) _game = Services.ServiceLocator.Get<GameManager>();
             stats.InitializeStats(diffData);
             transform.position = position;
             gameObject.SetActive(true);
@@ -77,7 +81,7 @@ namespace Enemy
 
         private void OnEnable()
         {
-            stats.OnDeath += OnDeath;
+            OnDeath += Death;
             damageable.OnTakeDamage += OnTakeDamage;
             animator.WeaponEvent.PlayAction += combat.WeaponPlay;
             animator.WeaponEvent.EndAction += OnWeaponEnd;
@@ -85,7 +89,7 @@ namespace Enemy
 
         private void OnDisable()
         {
-            stats.OnDeath -= OnDeath;
+            OnDeath -= Death;
             damageable.OnTakeDamage -= OnTakeDamage;
             animator.WeaponEvent.PlayAction -= combat.WeaponPlay;
             animator.WeaponEvent.EndAction -= OnWeaponEnd;
@@ -97,16 +101,16 @@ namespace Enemy
         }
 
         // Action
-        private void OnDeath()
+        private void Death()
         {
             _game.Loot.Roll(data.Loot, transform.position);
             _spawn.Remove(this);
-            Services.Services.Get<PoolManager>().Release(this);
+            Services.ServiceLocator.Get<PoolManager>().Release(this);
         }
 
         public void ForceDespawn()
         {
-            Services.Services.Get<PoolManager>().Release(this);
+            Services.ServiceLocator.Get<PoolManager>().Release(this);
         }
 
         // Controller
@@ -132,18 +136,13 @@ namespace Enemy
 
         public void ManualAttack()
         {
-            AnimatorPlayAnimation(EntityAnimationType.Attack);
+            animator.SetTrigger(animator.Attack);
             combat.ManualAttack();
         }
         
         private void OnWeaponEnd()
         {
-            AnimatorPlayAnimation(EntityAnimationType.Idle);
-        }
-        
-        public void AnimatorPlayAnimation(EntityAnimationType animationType)
-        {
-            animator.PlayAnimation(animationType);
+            Animator.SetFloat(Animator.Speed, 0);
         }
         
         private void OnTakeDamage(float damage)

@@ -27,12 +27,6 @@ namespace Core
         {
             CurrentWave++;
             
-            if (CurrentWave > levelWave.TotalWave)
-            {
-                OnCompleteMode?.Invoke();
-                return;
-            }
-            
             CurrentWaveData = levelWave.GetWaveData(CurrentWave - 1);
             
             StartMode();
@@ -48,10 +42,23 @@ namespace Core
 
         protected override void EndMode()
         {
-            OnEndMode?.Invoke();
             _waveCoroutine = null;
             
             ui.UpdateTime(0);
+            
+            if (CurrentWave >= levelWave.TotalWave)
+            {
+                OnCompleteMode?.Invoke();
+            }
+            else
+            {
+                OnEndMode?.Invoke();
+            }
+        }
+
+        public override void StopMode()
+        {
+            StopCoroutine(_waveCoroutine);
         }
 
         public override EnemyType GetEnemyType()

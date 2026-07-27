@@ -1,4 +1,6 @@
-﻿using Core;
+﻿using System;
+using System.Collections.Generic;
+using Core;
 using Database.Upgrade;
 using UnityEngine;
 
@@ -9,15 +11,34 @@ namespace UI
         [SerializeField] private UpgradeManager manager;
         [SerializeField] private UIUpgradeView view;
 
-        public void OpenUI()
+        private void OnEnable()
         {
             view.OnNextButtonClicked += OnNext;
+        }
+
+        private void OnDisable()
+        {
+            view.OnNextButtonClicked -= OnNext;
+        }
+
+        public void OpenUI()
+        {
             view.Open();
+        }
+
+        public void OpenUIViewOnly(List<UpgradeData> upgrades)
+        {
+            view.OpenViewOnly();
+            for (int i = 0; i < upgrades.Count; i++)
+            {
+                var data = upgrades[i];
+                string desc = $"{data.UpgradeValueString()} {data.upgradeStat}";
+                view.InitializeViewOnly(data.upgradeIcon, data.upgradeName, desc);
+            }
         }
 
         public void CloseUI()
         {
-            view.OnNextButtonClicked -= OnNext;
             view.Close();
         }
         

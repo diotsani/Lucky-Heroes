@@ -5,13 +5,15 @@ namespace Character
 {
     public class WalkState : CharacterState
     {
+        private float _speed = 0;
         public WalkState(CharacterBrain character, StateMachine stateMachine) : base(character, stateMachine)
         {
         }
 
         public override void Enter()
         {
-            Character.Animator.PlayAnimation(EntityAnimationType.Walk);
+            _speed = Character.GetStats().WalkSpeed;
+            Character.Animator.SetFloat(Character.Animator.Speed, 1);
         }
 
         public override void Exit()
@@ -21,7 +23,8 @@ namespace Character
 
         public override void Update()
         {
-            Character.MotorMove();
+            var input = Character.Input.Move;
+            Character.Motor.Move(input, _speed);
 
             if (!Character.InputMoving())
             {

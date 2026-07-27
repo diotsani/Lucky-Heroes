@@ -13,7 +13,7 @@ namespace Character
         {
             Character.Input.Stop();
             Character.Motor.Stop();
-            Character.Animator.PlayAnimation(EntityAnimationType.Death);
+            Character.Animator.SetTrigger(Character.Animator.Death);
             Character.Combat.Stop();
             Character.Skill.Stop();
         }

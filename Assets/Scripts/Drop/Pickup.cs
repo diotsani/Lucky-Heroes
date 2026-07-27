@@ -1,4 +1,5 @@
 ﻿using Character;
+using Core;
 using Enums;
 using Pool;
 using UnityEngine;
@@ -15,12 +16,14 @@ namespace Drop
         //[SerializeField] private float collectRadius = 1f;
         [SerializeField] private float moveSpeed = 3f;
         public abstract int Value { get; set; }
+        private DropManager _drop;
         protected CharacterBrain Player;
         
-        public void Spawn(int value, Vector2 position)
+        public void Spawn(DropManager drop, int value, Vector2 position)
         {
             state = PickupState.Idle;
-            if(Player == null)Player = Services.Services.Get<CharacterBrain>();
+            if (_drop == null) _drop = drop;
+            if(Player == null) Player = Services.ServiceLocator.Get<CharacterBrain>();
             transform.position = position;
             Value = value;
             gameObject.SetActive(true);
@@ -61,12 +64,13 @@ namespace Drop
         {
             state = PickupState.Collected;
             OnCollected();
-            Services.Services.Get<PoolManager>().Release(this);
+            _drop.Remove(this);
+            Services.ServiceLocator.Get<PoolManager>().Release(this);
         }
         
         public void ForceDespawn()
         {
-            Services.Services.Get<PoolManager>().Release(this);
+            Services.ServiceLocator.Get<PoolManager>().Release(this);
         }
         
         protected abstract void OnCollected();

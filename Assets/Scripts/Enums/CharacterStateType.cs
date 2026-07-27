@@ -5,6 +5,7 @@
         Idle,
         Walk,
         Run,
-        Dead
+        Death,
+        Stop
     }
 }

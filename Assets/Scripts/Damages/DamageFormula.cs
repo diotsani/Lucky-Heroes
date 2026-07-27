@@ -17,7 +17,7 @@ namespace Damages
 
         static float BaseDamage(float scale, float multiplier)
         {
-            Debug.Log($"Base Dmg: {scale * (multiplier / 100)}");
+            //Debug.Log($"Base Dmg: {scale * (multiplier / 100)}");
             return scale * (multiplier / 100);
         }
 

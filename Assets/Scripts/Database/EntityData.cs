@@ -51,7 +51,6 @@ namespace Database
         public float HealthPercent => Health / MaxHealth;
         public float ManaPercent => Mana / MaxMana;
         public float StaminaPercent => Stamina / MaxStamina;
-        public float ASpd => BaseAttackSpeed / AttackSpeed;
     }
 
     [Serializable]

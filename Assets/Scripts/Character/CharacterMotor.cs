@@ -1,4 +1,5 @@
 ﻿using System;
+using Core;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -7,32 +8,40 @@ namespace Character
     [RequireComponent(typeof(Rigidbody2D))]
     public class CharacterMotor : MonoBehaviour
     {
-        [SerializeField] private CharacterBrain brain;
-        [SerializeField] private Rigidbody2D rb;
-        
-        public void Move(Vector2 move, bool run)
+        private CharacterBrain _brain;
+        private ArenaBound _arena;
+
+        public void Initialize(CharacterBrain brain, ArenaBound arena)
         {
-            Vector2 moveDirection = move;
+            _brain = brain;
+            _arena = arena;
+        }
+
+        public void Move(Vector2 move, float speed)
+        {
+            if (move.sqrMagnitude < 0.01f) return;
             
-            if(moveDirection.sqrMagnitude < 0.01f)return;
+            move.Normalize();
             
-            moveDirection.Normalize();
+            Vector2 nextPosition = (Vector2)transform.position + move * speed * Time.deltaTime;
+
+            if (_arena == null || _arena.IsInside(nextPosition))
+            {
+                transform.position = nextPosition;
+            }
             
-            float speed = run ? brain.GetStats().RunSpeed : brain.GetStats().WalkSpeed;
-            rb.linearVelocity = moveDirection * speed;
-            
-            Rotate(moveDirection);
+            Rotate(move);
         }
 
         private void Rotate(Vector2 direction)
         {
-            if(direction.x == 0)return;
+            if (Mathf.Abs(direction.x) < 0.01f) return;
             transform.localScale = new Vector3(direction.x > 0 ? 1 : -1, 1, 1);
         }
 
         public void Stop()
         {
-            rb.linearVelocity = Vector2.zero;
+            
         }
     }
 }

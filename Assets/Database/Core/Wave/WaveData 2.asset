@@ -23,7 +23,7 @@ MonoBehaviour:
     weight: 30
     percent: 23.076923
     percentage: 23.1%
-  duration: 15
+  duration: 60
   interval: 0.6
   maxEnemies: 50
   isValidate: 0

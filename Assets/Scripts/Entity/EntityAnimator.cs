@@ -1,4 +1,5 @@
-﻿using Enums;
+﻿using System;
+using Enums;
 using Events;
 using UnityEngine;
 
@@ -10,42 +11,26 @@ namespace Entity
         [SerializeField] private Animator animator;
         [SerializeField] private WeaponAnimationEvent weaponAnimationEvent;
         public WeaponAnimationEvent WeaponEvent => weaponAnimationEvent;
+        
+        public readonly int Speed = Animator.StringToHash("Speed");
+        public readonly int Run = Animator.StringToHash("Run");
+        public readonly int Attack = Animator.StringToHash("Attack");
+        public readonly int Death = Animator.StringToHash("Death");
+        public readonly int ASpd = Animator.StringToHash("ASpd");
 
-        [SerializeField] private bool _hold = false;
-        private static readonly int ASpd = Animator.StringToHash("ASpd");
-
-        public virtual void PlayAnimation(EntityAnimationType type)
+        public void SetFloat(int id, float value)
         {
-            if(_hold)return;
-            //if(animationType == type)return;
-            animationType = type;
-            animator.Play(type.ToString());
+            animator.SetFloat(id, value);
         }
 
-        public virtual void Continue(CharacterStateType type)
+        public void SetBool(int id, bool value)
         {
-            Debug.Log("Hold Attack False");
-            _hold = false;
-            animationType = type switch
-            {
-                CharacterStateType.Idle => EntityAnimationType.Idle,
-                CharacterStateType.Walk => EntityAnimationType.Walk,
-                CharacterStateType.Run => EntityAnimationType.Run,
-                CharacterStateType.Dead => EntityAnimationType.Death,
-                _ => animationType
-            };
-            PlayAnimation(animationType);
+            animator.SetBool(id, value);
         }
 
-        public void Hold()
+        public void SetTrigger(int id)
         {
-            Debug.Log("Hold Attack True");
-            _hold = true;
-        }
-
-        public void UpdateASpdValue(float value)
-        {
-            animator.SetFloat(ASpd, value);
+            animator.SetTrigger(id);
         }
     }
 }

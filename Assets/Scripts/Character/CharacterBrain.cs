@@ -1,10 +1,12 @@
 using System;
+using Core;
 using Database;
 using Database.Character;
 using Database.Upgrade;
 using Database.Weapon;
 using Entity;
 using Enums;
+using Services;
 using StateMachines;
 using UI;
 using UnityEngine;
@@ -36,14 +38,27 @@ namespace Character
         public CharacterSkill Skill => skill;
         public EntityAnimator Animator => animator;
 
+        public Action OnDeath { get; set; }
         private CharacterStateType _stateType;
         private StateMachine StateMachine { get; set; }
+        private IdleState _idleState;
+        private WalkState _walkState;
+        private RunState _runState;
+        private StopState _stopState;
         
         private void Awake()
         {
-            Services.Services.Register(this);
+            ServiceLocator.Register(this);
             StateMachine = new StateMachine();
-            ChangeState(CharacterStateType.Idle);
+            _idleState = new IdleState(this, StateMachine);
+            _walkState = new WalkState(this, StateMachine);
+            _runState = new RunState(this, StateMachine);
+            _stopState = new StopState(this, StateMachine);
+        }
+
+        private void OnDestroy()
+        {
+            ServiceLocator.Unregister(this);
         }
 
         public void ChangeState(CharacterStateType type)
@@ -52,43 +67,49 @@ namespace Character
             switch (_stateType)
             {
                 case CharacterStateType.Idle:
-                    StateMachine.ChangeState(new IdleState(this, StateMachine));
+                    StateMachine.ChangeState(_idleState);
                     break;
                 case CharacterStateType.Walk:
-                    StateMachine.ChangeState(new WalkState(this, StateMachine));
+                    StateMachine.ChangeState(_walkState);
                     break;
                 case CharacterStateType.Run:
-                    StateMachine.ChangeState(new RunState(this, StateMachine));
+                    StateMachine.ChangeState(_runState);
                     break;
-                case CharacterStateType.Dead:
+                case CharacterStateType.Death:
                     StateMachine.ChangeState(new DeadState(this, StateMachine));
                     break;
+                case CharacterStateType.Stop:
+                    StateMachine.ChangeState(_stopState);
+                    break;
                 default:
-                    StateMachine.ChangeState(new IdleState(this, StateMachine));
+                    StateMachine.ChangeState(_idleState);
                     break;
             }
         }
 
         private void OnEnable()
         {
-            stats.OnDeath += OnDeath;
             stats.OnGainASpd += OnGainASpd;
             input.OnAttacked += OnAttacked;
             damageable.OnTakeDamage += OnTakeDamage;
             animator.WeaponEvent.PlayAction += combat.WeaponPlay;
-            animator.WeaponEvent.StopAction += OnWeaponStop;
-            animator.WeaponEvent.EndAction += OnWeaponEnd;
+            //animator.WeaponEvent.StopAction += OnWeaponStop;
+            animator.WeaponEvent.EndAction += combat.ForceAttackEnd;
         }
 
         private void OnDisable()
         {
-            stats.OnDeath -= OnDeath;
             stats.OnGainASpd -= OnGainASpd;
             input.OnAttacked -= OnAttacked;
             damageable.OnTakeDamage -= OnTakeDamage;
             animator.WeaponEvent.PlayAction -= combat.WeaponPlay;
-            animator.WeaponEvent.StopAction -= OnWeaponStop;
-            animator.WeaponEvent.EndAction -= OnWeaponEnd;
+            //animator.WeaponEvent.StopAction -= OnWeaponStop;
+            animator.WeaponEvent.EndAction -= combat.ForceAttackEnd;
+        }
+
+        private void Start()
+        {
+            motor.Initialize(this, Services.ServiceLocator.Get<GameManager>().Room.Arena);
         }
 
         private void Update()
@@ -97,39 +118,23 @@ namespace Character
         }
 
         #region Actions
-        private void OnDeath()
-        {
-            ChangeState(CharacterStateType.Dead);
-        }
 
         private void OnGainASpd(float amount)
         {
-            animator.UpdateASpdValue(amount);
+            animator.SetFloat(animator.ASpd, amount);
         }
         
         private void OnAttacked()
         {
             if (combat.ManualAttack())
             {
-                Animator.PlayAnimation(EntityAnimationType.Attack);
-                Animator.Hold();
+                Animator.SetTrigger(Animator.Attack);
             }
         }
 
         private void OnTakeDamage(float damage)
         {
             stats.ReduceHealth(damage);
-        }
-        
-        private void OnWeaponStop()
-        {
-            
-        }
-        
-        private void OnWeaponEnd()
-        {
-            animator.Continue(_stateType);
-            combat.WeaponEnd();
         }
         #endregion
 
@@ -142,11 +147,6 @@ namespace Character
         public bool InputRunning()
         {
             return input.Running;
-        }
-        
-        public void MotorMove()
-        {
-            motor.Move(input.Move, input.Running);
         }
         #endregion
 
@@ -166,7 +166,6 @@ namespace Character
             return data.WeaponData;
         }
         #endregion
-        
     }
 }
 

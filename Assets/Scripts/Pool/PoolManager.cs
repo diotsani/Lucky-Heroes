@@ -5,6 +5,7 @@ using Drop;
 using Enemy;
 using Enums;
 using Interfaces;
+using Services;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -24,7 +25,7 @@ namespace Pool
 
         private void Awake()
         {
-            Services.Services.Register(this);
+            ServiceLocator.Register(this);
             
             foreach (var e in enemies)
             {
@@ -41,6 +42,11 @@ namespace Pool
                     Parent = pickupsParent,
                 });
             }
+        }
+        
+        private void OnDestroy()
+        {
+            ServiceLocator.Unregister(this);
         }
 
         public EnemyBrain GetEnemy(EnemyType type)

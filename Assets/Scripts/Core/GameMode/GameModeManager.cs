@@ -35,6 +35,11 @@ namespace Core.GameMode
             
         }
 
+        public virtual void StopMode()
+        {
+            
+        }
+
         public virtual EnemyType GetEnemyType()
         {
             return EnemyType.Orc1;

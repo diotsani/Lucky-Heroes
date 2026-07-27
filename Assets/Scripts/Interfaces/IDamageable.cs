@@ -10,7 +10,7 @@ namespace Interfaces
 
         void TakeDamage(float damage)
         {
-            Debug.Log($"Take Damage {damage}");
+            //Debug.Log($"Take Damage {damage}");
             OnTakeDamage?.Invoke(damage);
         }
         

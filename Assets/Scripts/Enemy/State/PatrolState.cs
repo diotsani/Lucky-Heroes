@@ -13,7 +13,7 @@ namespace Enemy
 
         public override void Enter()
         {
-            Enemy.AnimatorPlayAnimation(EntityAnimationType.Walk);
+            Enemy.Animator.SetFloat(Enemy.Animator.Speed, 1);
             _nextPatrolPoint = NextPoint(Enemy.Position, Enemy.Data.PatrolRange);
             Interval = Enemy.Data.PatrolInterval;
         }
@@ -27,7 +27,7 @@ namespace Enemy
         {
             if (Enemy.SuccessMove(_nextPatrolPoint - Enemy.Position))
             {
-                Enemy.AnimatorPlayAnimation(EntityAnimationType.Idle);
+                Enemy.Animator.SetFloat(Enemy.Animator.Speed, 0);
             }
             else
             {
@@ -48,7 +48,7 @@ namespace Enemy
             }
             
             _nextPatrolPoint = NextPoint(Enemy.Position, Enemy.Data.PatrolRange);
-            Enemy.AnimatorPlayAnimation(EntityAnimationType.Walk);
+            Enemy.Animator.SetFloat(Enemy.Animator.Speed, 1);
 
             Timer = Interval;
         }

@@ -11,7 +11,7 @@ namespace Enemy
 
         public override void Enter()
         {
-            Enemy.AnimatorPlayAnimation(EntityAnimationType.Death);
+            Enemy.Animator.SetTrigger(Enemy.Animator.Death);
         }
 
         public override void Exit()

@@ -12,8 +12,6 @@ namespace Enemy
         public RuntimeStats RuntimeStats { get; private set; }
         
         public RuntimeStats GetRuntimeStats => RuntimeStats;
-        
-        public Action OnDeath { get; set; }
 
         public void InitializeStats()
         {
@@ -43,7 +41,7 @@ namespace Enemy
             if (RuntimeStats.Health <= 0)
             {
                 RuntimeStats.Health = 0;
-                OnDeath?.Invoke();
+                brain.OnDeath?.Invoke();
             }
         }
     }

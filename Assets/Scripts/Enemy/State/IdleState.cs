@@ -13,7 +13,7 @@ namespace Enemy
         public override void Enter()
         {
             Enemy.MotorStop();
-            Enemy.AnimatorPlayAnimation(EntityAnimationType.Idle);
+            Enemy.Animator.SetFloat(Enemy.Animator.Speed, 0);
 
             Interval = Enemy.Data.DetectInterval;
             Timer = Interval;

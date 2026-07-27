@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a40708e0b7044cb6ab1f6f0f60bcdb65, type: 3}
-  m_Name: Common Attack Up Boost Upgrade
+  m_Name: Common Attack Up Upgrade
   m_EditorClassIdentifier: 
   upgradeName: Attack Up
   upgradeDescription: 

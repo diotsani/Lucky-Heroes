@@ -10,6 +10,7 @@ namespace Character
         [Header("Exp")]
         [SerializeField] private int baseExp = 10;
         [SerializeField] private float growth = 1.10f;
+        private int _totalExp = 0;
         private int _requiredExp;
         private int _lastLevel = 0;
         
@@ -24,6 +25,7 @@ namespace Character
         public void GainExp(int amount)
         {
             brain.Stats.RuntimeStats.Experience += amount;
+            _totalExp += amount;
             OnGainExp?.Invoke(Exp());
             while (brain.Stats.RuntimeStats.Experience >= _requiredExp)
             {

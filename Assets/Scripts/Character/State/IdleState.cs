@@ -1,5 +1,6 @@
 ﻿using Enums;
 using StateMachines;
+using UnityEngine;
 
 namespace Character
 {
@@ -11,8 +12,9 @@ namespace Character
 
         public override void Enter()
         {
+            Character.Input.Continue();
             Character.Motor.Stop();
-            Character.Animator.PlayAnimation(EntityAnimationType.Idle);
+            Character.Animator.SetFloat(Character.Animator.Speed, 0);
         }
 
         public override void Exit()

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using Context;
 using Database.Weapon;
+using Enums;
 using UnityEngine;
 using Weapons;
 
@@ -12,7 +14,8 @@ namespace Character
         [SerializeField] private WeaponBase weapon;
         private float _currentManualAttackTime = 0;
         private float _lastManualAttackTime = 0;
-        private bool _readyToAttack = true;
+        [SerializeField] private CombatState state = CombatState.Ready;
+        private Coroutine _attackRoutine;
 
         private void Start()
         {
@@ -21,12 +24,11 @@ namespace Character
 
         public bool ManualAttack()
         {
-            Debug.Log("Attack");
             if (CanManualAttack())
             {
                 _lastManualAttackTime = _currentManualAttackTime;
-                _readyToAttack = false;
-                Debug.Log("Success Attack");
+                state = CombatState.Attacking;
+                _attackRoutine = StartCoroutine(AttackTimeout());
                 return true;
             }
             return false;
@@ -48,27 +50,37 @@ namespace Character
             weapon.Attack(ctx, null);
         }
 
-        public void WeaponEnd()
-        {
-            Debug.Log("End Attack");
-            _readyToAttack = true;
-        }
-
         public void Stop()
         {
             
+        }
+
+        IEnumerator AttackTimeout()
+        {
+            yield return new WaitForSeconds(AttackTime());
+            ForceAttackEnd();
+        }
+
+        public void ForceAttackEnd()
+        {
+            state = CombatState.Ready;
+            if (_attackRoutine != null)
+            {
+                StopCoroutine(_attackRoutine);
+            }
+            _attackRoutine = null;
         }
 
         private bool CanManualAttack()
         {
             /*_currentManualAttackTime = Time.time;
             return _currentManualAttackTime - _lastManualAttackTime >= AttackTime();*/
-            return _readyToAttack;
+            return state == CombatState.Ready;
         }
 
         private float AttackTime()
         {
-            return weapon.Data.AttackClip.length * brain.GetRuntimeStats().ASpd;
+            return weapon.Data.AttackClip.length / brain.GetRuntimeStats().AttackSpeed;
         }
     }
 }

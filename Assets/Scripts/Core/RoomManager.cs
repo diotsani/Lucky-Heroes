@@ -6,9 +6,12 @@ namespace Core
 {
     public class RoomManager : MonoBehaviour
     {
+        [SerializeField] private ArenaBound arena;
         [SerializeField] private Transform[] points;
         [SerializeField] private SpawnPoint[] spawnPoints;
         private SpawnPoint[] _activeSpawnPoints;
+        
+        public ArenaBound Arena => arena;
 
         public void Setup()
         {

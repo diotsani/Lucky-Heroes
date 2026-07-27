@@ -11,7 +11,7 @@ namespace Enemy
 
         public override void Enter()
         {
-            Enemy.AnimatorPlayAnimation(EntityAnimationType.Run);
+            Enemy.Animator.SetFloat(Enemy.Animator.Speed, 2);
         }
 
         public override void Exit()
