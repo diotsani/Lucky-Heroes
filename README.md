@@ -20,6 +20,11 @@ Heroes with a bit of luck must fight hordes of monsters! Heroes Lucky is a top-d
 5. The run ends when the player is defeated or all stages are completed.
 6. Select **Restart** to begin a new run or **Return** back to main menu.
 
+\### Controls
+- WASD - Move
+- Left Click - Attack
+- Left Shift - Run
+
 \## Technical Decisions
 
 \### Architecture
@@ -81,6 +86,11 @@ Extra
 * **Luck** is displayed as a player stat and can be increased through upgrades, but it currently has no gameplay effect.
 * The original design planned for Luck to influence systems such as reward quality, rare events, and random drops, but this was not implemented within the prototype's scope.
 * Some scripts are still maintainable.
+
+\## Attachments
+- Gameplay Video (Google Drive): [Gameplay](https://drive.google.com/file/d/1BmohtTCIzJsIIhJaVDTm4aYcaY5jwW3N/view?usp=drive_link)
+- Build (Google Drive): [Build.exe](https://drive.google.com/file/d/1YRU4TzAZOygfkV4GYXXcLO5Nz7cIZfKg/view?usp=drive_link)
+- Source Repository: [Lucky Heroes](https://github.com/diotsani/Lucky-Heroes.git)
 
 Development priorities focused on gameplay stability, procedural progression, combat, and upgrade selection.
 
